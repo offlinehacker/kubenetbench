@@ -271,7 +271,7 @@ func KubeGetNodeIP(nodeName string) (string, error) {
 }
 
 func KubeGetNodesAndIps() ([]string, error) {
-	cmd := "kubectl get nodes -o custom-columns=Name:'.metadata.name',Addr:'.status.addresses[0].address' --no-headers"
+	cmd := "kubectl get nodes -o custom-columns=Name:'.metadata.name',Addr:'.status.addresses[0].address' -l 'node-role.kubernetes.io/control-plane!=' --no-headers"
 	lines, err := utils.ExecCmdLines(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("command %s failed: %w", cmd, err)
